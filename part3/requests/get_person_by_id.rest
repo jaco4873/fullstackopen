@@ -1,0 +1,5 @@
+GET https://phonebook-jbl.fly.dev/api/persons/6
+
+
+###
+GET http://localhost:3001/api/persons/6605e8f788eb270d35ab7f25

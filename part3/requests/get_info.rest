@@ -1,0 +1,4 @@
+GET https://phonebook-jbl.fly.dev/info
+
+###
+GET http://localhost:3001/info

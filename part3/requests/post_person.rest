@@ -1,0 +1,18 @@
+POST https://phonebook-jbl.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Ja wLs",
+    "number": "123-456-7890"
+}
+
+
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "backend-test",
+    "number": "100-200-3000"
+}
+

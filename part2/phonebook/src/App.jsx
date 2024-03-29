@@ -56,12 +56,12 @@ const App = () => {
           })
         setNewName('')
         setNewNumber('')
-        return 
+        return
       }
       // User declined overwriting, clear inputs
       setNewName('')
       setNewNumber('')
-      return 
+      return
     }
 
     // Only create a new person if there isn't an existing one
@@ -71,9 +71,15 @@ const App = () => {
         setSuccessMessage(`Created entry for ${newName} with number ${newNumber}`)
         setTimeout(() => {
           setSuccessMessage(null)
-        }, 3000)
+        }, 5000)
         setNewName('')
         setNewNumber('')
+      })
+      .catch(error => {
+        setErrorMessage(error.response.data.error)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
   }
 
@@ -91,9 +97,9 @@ const App = () => {
           setErrorMessage(null)
         }, 5000)
         personService.getAll()
-        .then(updatedPersons => {
-          setPersons(updatedPersons)
-        })
+          .then(updatedPersons => {
+            setPersons(updatedPersons)
+          })
       })
   }
 
@@ -101,8 +107,6 @@ const App = () => {
   const personsVisible = searchWord
     ? persons.filter(person => person.name.toLowerCase().includes(searchWord.toLowerCase()))
     : persons
-
- 
 
   /* eventHandlers */
   const handleNameChange = (event) => {
@@ -124,7 +128,7 @@ const App = () => {
       <SuccessNotification message={successMessage} />
       <Filter value={searchWord} onChange={handleSearchChange} />
       <h2>Add a new</h2>
-      <PersonForm 
+      <PersonForm
         onSubmit={addPerson}
         newName={newName}
         onNameChange={handleNameChange}
