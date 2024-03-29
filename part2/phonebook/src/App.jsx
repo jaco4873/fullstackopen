@@ -1,84 +1,12 @@
 import { useEffect, useState } from 'react'
 import personService from './services/persons'
-
-
-/* Components */
-
-const Filter = ({ value, onChange }) => {
-  return (
-    <div>
-      filter shown with: <input value={value} onChange={onChange} />
-    </div>
-  )
-}
-
-const PersonForm = ({ onSubmit, newName, onNameChange, newNumber, onNumberChange }) => {
-  return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <input
-          value={newName}
-          onChange={onNameChange}
-          placeholder="Name"
-        />
-      </div>
-      <div>
-        <input
-          value={newNumber}
-          onChange={onNumberChange}
-          placeholder="Number"
-        />
-      </div>
-      <div>
-        <button type="submit">add</button>
-      </div>
-    </form>
-  )
-}
-
-
-
-const Persons = ({ persons, onDelete }) => {
-  return (
-    <ul>
-      {persons.map(person => 
-        <li key={person.id}> 
-          {person.name} {person.number}
-          <button type="button" onClick={() => onDelete(person.id)}>delete</button>  
-        </li>
-      )}
-    </ul>
-  )
-}
-
-const ErrorNotification = ({ message }) => {
-  if (message === null) {
-    return null
-  }
-
-  return (
-    <div className='error'>
-      {message}
-    </div>
-  )
-}
-
-const SuccessNotification = ({ message }) => {
-  if (message === null) {
-    return null
-  }
-
-  return (
-    <div className='success'>
-      {message}
-    </div>
-  )
-}
-
-/* App Component */
+import Filter from './components/filter'
+import PersonForm from './components/personform'
+import Persons from './components/persons'
+import ErrorNotification from './components/errornotification'
+import SuccessNotification from './components/successnotification'
 
 const App = () => {
-  
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
@@ -86,7 +14,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
 
-  /* Render all persons on first render */
   useEffect(() => {
     personService
       .getAll()
@@ -94,53 +21,51 @@ const App = () => {
         setPersons(initialPersons)
       })
   }, [])
-    
-  /* Add new person and write to db, then concat to currents list of persons (done client side, but will persist in the database if refreshed) */
-  
+
   const findExistingPerson = (personObject, persons) => {
     return persons.find(person => person.name === personObject.name) || null
   }
 
   const addPerson = (event) => {
     event.preventDefault()
-    
+
     const personObject = {
       name: newName,
       number: newNumber
     }
 
     const alreadyExisting = findExistingPerson(personObject, persons)
-     
+
     if (alreadyExisting) {
       const userResponse = window.confirm(`${newName} already exists in the phonebook, do you want to overwrite the number with: ${newNumber}`)
       console.log('User response:', userResponse)
       if (userResponse) {
         personService.update(alreadyExisting.id, personObject)
-            .then(updatedPerson => {
-                setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
-                setSuccessMessage(`Updated phonenumber of ${newName} to ${newNumber}`)
-                setTimeout(() => {
-                    setSuccessMessage(null)
-                }, 5000)
-                setNewName('')
-                setNewNumber('')
-            })
-            .catch(() => {
-                setErrorMessage(`Phone number of ${newName} could not be updated. Server error.`)
-                setTimeout(() => {
-                    setErrorMessage(null)
-                }, 5000)
-            })
-    } else {
+          .then(updatedPerson => {
+            setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
+            setSuccessMessage(`Updated phone number of ${newName} to ${newNumber}`)
+            setTimeout(() => {
+              setSuccessMessage(null)
+            }, 5000)
+          })
+          .catch(() => {
+            setErrorMessage(`Phone number of ${newName} could not be updated. Server error.`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+          })
         setNewName('')
         setNewNumber('')
-        console.log('User declined overwriting')
+        return 
+      }
+      // User declined overwriting, clear inputs
+      setNewName('')
+      setNewNumber('')
+      return 
     }
-    return
-}
 
-    personService
-      .create(personObject)
+    // Only create a new person if there isn't an existing one
+    personService.create(personObject)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setSuccessMessage(`Created entry for ${newName} with number ${newNumber}`)
