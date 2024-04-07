@@ -30,8 +30,7 @@ module.exports = {
       2
     ],
     '@stylistic/js/linebreak-style': [
-      'error',
-      'unix'
+      'off',
     ],
     '@stylistic/js/quotes': [
       'error',
