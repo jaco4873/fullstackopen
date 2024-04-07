@@ -3,7 +3,7 @@ const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 const listOfBlogs = require('../utils/blog_list').listOfBlogs
 
-describe('favorite blog', () => {
+describe('Most likes from a list of blogs', () => {
   const blogs = listOfBlogs
 
   test('favorite blog of an empty list', () => {

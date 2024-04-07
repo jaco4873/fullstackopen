@@ -3,7 +3,7 @@ const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 const listOfBlogs = require('../utils/blog_list').listOfBlogs
 
-describe('total likes', () => {
+describe('total likes of list of blogposts', () => {
   const listWithOneBlog = [
     {
       _id: '5a422aa71b54a676234d17f8',
