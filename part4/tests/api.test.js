@@ -12,12 +12,22 @@ const User = require('../models/user')
 
 describe('when there are initially some blogs saved', () => {
   beforeEach(async () => {
+    await User.deleteMany({})
     await Blog.deleteMany({})
 
-    const blogObjects = helper.initialBlogs
-      .map(blog => new Blog(blog))
-    const promiseArray = blogObjects.map(blog => blog.save())
-    await Promise.all(promiseArray)
+    const user = new User({
+      username: 'automatedtestuser',
+      name: 'Automated Test User',
+      passwordHash: 'hashedPW'
+    })
+    console.log('User:', user)
+    await user.save()
+
+    const blogObjects = helper.initialBlogs.map(blog => new Blog({
+      ...blog,
+      user: user
+    }))
+    await Promise.all(blogObjects.map(testBlog => testBlog.save))
   })
 
   test('blogs are returned as json', async () => {

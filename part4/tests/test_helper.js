@@ -7,6 +7,7 @@ const initialBlogs = [
     author: 'blog author',
     url: 'http://blog.com',
     likes: 20
+    
   },
   {
     title: 'blogtest2',
