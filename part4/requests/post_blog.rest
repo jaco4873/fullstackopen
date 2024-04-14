@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjY2MWIwNGNlYjc5ZDc4ODVlNTJjOTAzYSIsImlhdCI6MTcxMzA4NDUwNywiZXhwIjoxNzEzMDg4MTA3fQ.ecjTIkbY-_t5dfk7w7cuUny-MtcZlwyL4ZgI08dKC8s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphY29iIiwiaWQiOiI2NjFiYzVjZjdlNjMzMTk3NzhkNjEzNGQiLCJpYXQiOjE3MTMwOTYxNTMsImV4cCI6MTcxMzA5OTc1M30.JlfkNLFfDCdZXDKhCbkyIg6d5CVSxiq6ipODwN9LqFg
 
 {
-    "title": "test",
-    "author": "test",
-    "url": "http://blog.com",
-    "likes": 20
+    "title": "Jacobs Blog",
+    "author": "Jacob",
+    "url": "http://jacob.com",
+    "likes": 100000
 }
