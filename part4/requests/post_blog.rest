@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vcnRlbiIsImlkIjoiNjYxYzFlZTI1YThjZjgxYmNkMDFiN2M5IiwiaWF0IjoxNzEzMTE4OTU4LCJleHAiOjE3MTMxMjI1NTh9.DTzsRlx1GERgRMXuHqgNbmDIpTEPHd31-NzUpm3d7wM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZpbmFsdGVzdCIsImlkIjoiNjYxZWQ4YzYzYjNiODdkZWNhM2RlMjAyIiwiaWF0IjoxNzEzMjk3NjI2LCJleHAiOjE3MTMzMDEyMjZ9.uDV1DcT0rIoRzi2YsXISfQHC-bXnatkcTE-HkJJk0B8
 
 {
-    "title": "Mortens Blog2",
-    "author": "Mortens",
-    "url": "http://morten.com",
-    "likes": 100
+    "title": "Final Test Blog Post",
+    "author": "Final Tester",
+    "url": "http://final.com",
+    "likes": 1000000000
 }
