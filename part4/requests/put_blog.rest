@@ -1,0 +1,11 @@
+PUT http://localhost:3003/api/blogs/66218e7dee3f1fd5b7c76fa9
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjY2MWIwNGNlYjc5ZDc4ODVlNTJjOTAzYSIsImlhdCI6MTcxMzY5MDIzOCwiZXhwIjoxNzEzNjkzODM4fQ.7FXNc_unxatdpKLaujD4f7U_wy-otrnqojoncQjMuX0
+
+{
+    "title": "UPDATE2",
+    "author": "UPDATE Tester",
+    "url": "http://update.com",
+    "likes": 779,
+    "user": "661b04ceb79d7885e52c903a"
+}

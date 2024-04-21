@@ -58,7 +58,8 @@ const App = () => {
             <SuccessNotification message = {successMessage}/>
             <ErrorNotification message = {errorMessage} />
             <BlogList 
-              blogs={blogs} 
+              blogs={blogs}
+              onBlogAdded={handleBlogAdded} 
             />  
           </>
       )}

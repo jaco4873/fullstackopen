@@ -3,9 +3,13 @@ import blogsService from '../services/blogs'
 
 
 const CreateForm = ( { setErrorMessage, setSuccessMessage, onBlogAdded } ) => {
+    const [createFormVisible, setCreateFormVisible] = useState(false)
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
+
+    const hideWhenVisible = { display: createFormVisible ? 'none' : '' }
+    const showWhenVisible = { display: createFormVisible ? '' : 'none' }
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -15,6 +19,7 @@ const CreateForm = ( { setErrorMessage, setSuccessMessage, onBlogAdded } ) => {
             url: url
         }
 
+        // Logic to refetcb blogs and update UI on new blog creation
         try {
             const response = await blogsService.create(blogData)
             console.log(response)
@@ -40,44 +45,51 @@ const CreateForm = ( { setErrorMessage, setSuccessMessage, onBlogAdded } ) => {
 
     return (
     <>
-        <h2>create new</h2>
-        <form onSubmit={handleSubmit}>
-            <div>
-            <label>
-                title:
-                <input
-                type="text"
-                value={title}
-                name="title"
-                onChange={({ target }) => setTitle(target.value)}
-                />
-            </label>
-            </div>
-            <div>
-            <label>
-                author:
-                <input
-                type="text"
-                value={author}
-                name="author"
-                onChange={({ target }) => setAuthor(target.value)}
-                />
-            </label>
-            </div>
-            <div>
-            <label>
-                url:
-                <input
-                type="url"
-                value={url}
-                name="url"
-                onChange={({ target }) => setUrl(target.value)}
-                />
-            </label>
-            </div>
-            <br />
-            <button type="submit">create</button>
-        </form>
+        <br />
+        <div style={hideWhenVisible}>
+          <button onClick={() => setCreateFormVisible(true)}>new blog</button>
+        </div>
+        <div style={showWhenVisible}>
+            <h2>create new</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                <label>
+                    title:
+                    <input
+                    type="text"
+                    value={title}
+                    name="title"
+                    onChange={({ target }) => setTitle(target.value)}
+                    />
+                </label>
+                </div>
+                <div>
+                <label>
+                    author:
+                    <input
+                    type="text"
+                    value={author}
+                    name="author"
+                    onChange={({ target }) => setAuthor(target.value)}
+                    />
+                </label>
+                </div>
+                <div>
+                <label>
+                    url:
+                    <input
+                    type="url"
+                    value={url}
+                    name="url"
+                    onChange={({ target }) => setUrl(target.value)}
+                    />
+                </label>
+                </div>
+                <br />
+                <button type="submit">create</button>
+            </form>
+            <button onClick={() => setCreateFormVisible(false)}>cancel</button>
+        </div>
     </>
     )
 }

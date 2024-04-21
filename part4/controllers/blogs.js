@@ -37,20 +37,22 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) =
   if ( blog.user.toString() === user._id.toString() ) {
     await Blog.findByIdAndDelete(request.params.id)
     response.status(204).end()
-  }
-  else {
-    return response.status(401).json({ error: 'unauthorized' })
+  } else {
+    return response.status(401).json({ error: 'Unauthorized. Only authors can delete their entries.' })
   }
 })
 
 blogsRouter.put('/:id', async (request, response) => {
   const body = request.body
+  console.log('body', body)
+  console.log('user', request.user)
 
   const updatedBlog = {
     title: body.title,
     url: body.url,
     author: body.author,
-    likes: body.likes
+    likes: body.likes,
+    user: request.user
   }
 
   const updatedDocument = await Blog.findByIdAndUpdate(request.params.id, updatedBlog, { new: true })
