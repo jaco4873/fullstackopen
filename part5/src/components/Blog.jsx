@@ -30,7 +30,7 @@ const Blog = ({ blog, onBlogAdded }) => {
       likes: blog.likes + 1
     }
     console.log(updatedBlog)
-      
+
     try {
       const response = await blogsService.like(updatedBlog)
       if (response.status === 200) {
@@ -40,6 +40,7 @@ const Blog = ({ blog, onBlogAdded }) => {
         throw new Error(`Server responded with status: ${response.status}`)
       }
     } catch (error) {
+      console.error('Failed to update blog', error)
     }
   }
 
@@ -53,29 +54,30 @@ const Blog = ({ blog, onBlogAdded }) => {
         if (response.status === 204) {
           console.log('Blog deleted successfully', blog)
           onBlogAdded() // Fetch blogs again to update UI with new like count
-        } 
+        }
       } else {
         console.log('Deletetion cancelled')
       }
     } catch (error) {
+      console.error('Failed to delete blog', error)
     }
   }
 
   return (
     <>
-      <div style={blogStyle}>
+      <div style={blogStyle} className='blog'>
         {blog.title} {blog.author}
-        <button style={hideWhenDetailsVisible} onClick={handleBlogDetailsVisible}>view</button> 
-        <button style={showWhenDetailsVisible} onClick={handleBlogDetailsVisible}>hide</button> 
-        <div style={showWhenDetailsVisible}>
+        <button style={hideWhenDetailsVisible} onClick={handleBlogDetailsVisible}>view</button>
+        <button style={showWhenDetailsVisible} onClick={handleBlogDetailsVisible}>hide</button>
+        <div className = 'details' style={showWhenDetailsVisible}>
           <p style={{ margin: 0 }} > URL: {blog.url}</p>
           <p style={{ margin: 0 }} > Likes: {blog.likes} <button onClick={handleLike} >like</button></p>
           <p style={{ margin: 0 }} > Added by: {blog.user.name}</p>
-          <button style={{ backgroundColor: 'rgba(255, 0, 0, 0.7)', borderRadius: '5px', margin: 2 }} onClick={handleDelete} >remove</button> 
+          <button style={{ backgroundColor: 'rgba(255, 0, 0, 0.7)', borderRadius: '5px', margin: 2 }} onClick={handleDelete} >remove</button>
         </div>
-      </div> 
+      </div>
     </>
-    
+
   )
 }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import BlogList from './components/BlogList' 
+import BlogList from './components/BlogList'
 import LoginForm from './components/LoginForm'
 import Header from './components/Header'
 import CreateForm from './components/CreateForm'
@@ -17,14 +17,14 @@ const App = () => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-        const blogs = await blogService.getAll()
-        setBlogs(blogs)
+      const blogs = await blogService.getAll()
+      setBlogs(blogs)
     }
     fetchBlogs()
-}, [triggerFetch])
+  }, [triggerFetch])
 
   const handleBlogAdded = () => {
-    setTriggerFetch(prev => !prev) 
+    setTriggerFetch(prev => !prev)
   }
 
   useEffect(() => {
@@ -39,29 +39,29 @@ const App = () => {
   return (
     <div>
       {!user ? (
-          <>
-            <LoginForm
-              setUser={setUser}
-              setErrorMessage={setErrorMessage}
-            />
-            <br></br>
-            <ErrorNotification message={errorMessage}/>
-          </>
+        <>
+          <LoginForm
+            setUser={setUser}
+            setErrorMessage={setErrorMessage}
+          />
+          <br></br>
+          <ErrorNotification message={errorMessage}/>
+        </>
       ) : (
-          <>
-            <Header name={user.name}/>
-            <CreateForm 
-              setSuccessMessage = {setSuccessMessage} 
-              setErrorMessage = {setErrorMessage} 
-              onBlogAdded = {handleBlogAdded}/>
-            <br></br>
-            <SuccessNotification message = {successMessage}/>
-            <ErrorNotification message = {errorMessage} />
-            <BlogList 
-              blogs={blogs}
-              onBlogAdded={handleBlogAdded} 
-            />  
-          </>
+        <>
+          <Header name={user.name}/>
+          <CreateForm
+            setSuccessMessage = {setSuccessMessage}
+            setErrorMessage = {setErrorMessage}
+            onBlogAdded = {handleBlogAdded}/>
+          <br></br>
+          <SuccessNotification message = {successMessage}/>
+          <ErrorNotification message = {errorMessage} />
+          <BlogList
+            blogs={blogs}
+            onBlogAdded={handleBlogAdded}
+          />
+        </>
       )}
     </div>
   )
