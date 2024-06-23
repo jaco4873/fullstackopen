@@ -59,6 +59,7 @@ const App = () => {
           <ErrorNotification message = {errorMessage} />
           <BlogList
             blogs={blogs}
+            loggedInUser={user}
             onBlogAdded={handleBlogAdded}
           />
         </>

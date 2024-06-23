@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogsService from '../services/blogs'
 
-const Blog = ({ blog, onBlogAdded }) => {
+const Blog = ({ blog, loggedInUser, onBlogAdded }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -65,15 +65,22 @@ const Blog = ({ blog, onBlogAdded }) => {
 
   return (
     <>
-      <div style={blogStyle} className='blog'>
+      <div style={blogStyle} className='blog' data-testid='blogPost'>
         {blog.title} {blog.author}
-        <button style={hideWhenDetailsVisible} onClick={handleBlogDetailsVisible}>view</button>
+        <button style={hideWhenDetailsVisible} onClick={handleBlogDetailsVisible} data-testid='blogViewButton'>view</button>
         <button style={showWhenDetailsVisible} onClick={handleBlogDetailsVisible}>hide</button>
         <div className = 'details' style={showWhenDetailsVisible}>
           <p style={{ margin: 0 }} > URL: {blog.url}</p>
           <p style={{ margin: 0 }} > Likes: {blog.likes} <button onClick={handleLike} >like</button></p>
           <p style={{ margin: 0 }} > Added by: {blog.user.name}</p>
-          <button style={{ backgroundColor: 'rgba(255, 0, 0, 0.7)', borderRadius: '5px', margin: 2 }} onClick={handleDelete} >remove</button>
+          {loggedInUser.username === blog.user.username && (
+            <button 
+              style={{ backgroundColor: 'rgba(255, 0, 0, 0.7)', borderRadius: '5px', margin: 2 }} 
+              onClick={handleDelete} 
+            >
+              remove
+            </button>
+          )}
         </div>
       </div>
     </>
