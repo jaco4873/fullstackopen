@@ -33,6 +33,7 @@ const LoginForm = ({ setUser, setErrorMessage }) => {
           <label>
             Username:
             <input
+              data-testid="username"
               type="text"
               value={username}
               name="Username"
@@ -44,6 +45,7 @@ const LoginForm = ({ setUser, setErrorMessage }) => {
           <label>
             Password:
             <input
+              data-testid="password"
               type="password"
               value={password}
               name="Password"
@@ -51,7 +53,7 @@ const LoginForm = ({ setUser, setErrorMessage }) => {
             />
           </label>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" data-testid="loginbutton">Login</button>
       </form>
     </>
   )

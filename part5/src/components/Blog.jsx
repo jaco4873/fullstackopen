@@ -71,7 +71,7 @@ const Blog = ({ blog, loggedInUser, onBlogAdded }) => {
         <button style={showWhenDetailsVisible} onClick={handleBlogDetailsVisible}>hide</button>
         <div className = 'details' style={showWhenDetailsVisible}>
           <p style={{ margin: 0 }} > URL: {blog.url}</p>
-          <p style={{ margin: 0 }} > Likes: {blog.likes} <button onClick={handleLike} >like</button></p>
+          <p style={{ margin: 0 }} data-testid='likeButton' > Likes: {blog.likes} <button onClick={handleLike} >like</button></p>
           <p style={{ margin: 0 }} > Added by: {blog.user.name}</p>
           {loggedInUser.username === blog.user.username && (
             <button 
