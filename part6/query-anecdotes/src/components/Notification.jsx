@@ -1,11 +1,11 @@
 import { useReducer } from 'react'
 import { useContext } from 'react'
 
-import { useNotification } from '../context/NotificationContext'
+import { useNotificationValue } from '../context/NotificationContext'
 
 const Notification = () => {
 
-  const notification = useNotification()
+  const notification = useNotificationValue()
 
   const style = {
     border: 'solid',

@@ -16,7 +16,7 @@ const notificationReducer = (state, action) => {
 
 const NotificationContext = createContext()
 
-export const useNotification = () => {
+export const useNotificationValue = () => {
   const notificationAndDispatch = useContext(NotificationContext)
   return notificationAndDispatch[0]
 }
