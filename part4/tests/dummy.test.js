@@ -1,9 +1,9 @@
-const { test, describe } = require('node:test')
-const assert = require('node:assert')
-const listHelper = require('../utils/list_helper')
+const { test, describe } = require("node:test")
+const assert = require("node:assert")
+const listHelper = require("../utils/list_helper")
 
-describe('dummy', () => {
-  test('dummy returns one', () => {
+describe("dummy", () => {
+  test("dummy returns one", () => {
     const blogs = []
 
     const result = listHelper.dummy(blogs)

@@ -1,52 +1,25 @@
 module.exports = {
-  'env': {
-    'node': true,
-    'commonjs': true,
-    'es2021': true
+  env: {
+    node: true,
+    commonjs: true,
+    es2021: true,
   },
-  'extends': 'eslint:recommended',
-  'overrides': [
+  extends: ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  overrides: [
     {
-      'env': {
-        'node': true
+      env: {
+        node: true,
       },
-      'files': [
-        '.eslintrc.{js,cjs}'
-      ],
-      'parserOptions': {
-        'sourceType': 'script'
-      }
-    }
+      files: [".eslintrc.{js,cjs}"],
+      parserOptions: {
+        sourceType: "script",
+      },
+    },
   ],
-  'parserOptions': {
-    'ecmaVersion': 'latest'
+  parserOptions: {
+    ecmaVersion: "latest",
   },
-  'plugins': [
-    '@stylistic/js'
-  ],
-  'rules': {
-    '@stylistic/js/indent': [
-      'error',
-      2
-    ],
-    '@stylistic/js/linebreak-style': [
-      'off',
-    ],
-    '@stylistic/js/quotes': [
-      'error',
-      'single'
-    ],
-    '@stylistic/js/semi': [
-      'error',
-      'never'
-    ],
-    'eqeqeq': 'error',
-    'no-trailing-spaces': 'error',
-    'object-curly-spacing': [
-      'error', 'always'
-    ],
-    'arrow-spacing': [
-      'error', { 'before': true, 'after': true }
-    ]
-  }
+  rules: {
+    eqeqeq: "error",
+  },
 }

@@ -1,7 +1,6 @@
-const Header = ( { name }) => {
-
+const Header = ({ name }) => {
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedBlogappUser')
+    window.localStorage.removeItem("loggedBlogappUser")
     window.location.reload()
   }
 

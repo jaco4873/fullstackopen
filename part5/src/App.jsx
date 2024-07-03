@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 
-import BlogList from './components/BlogList'
-import LoginForm from './components/LoginForm'
-import Header from './components/Header'
-import CreateForm from './components/CreateForm'
-import ErrorNotification from './components/ErrorNotification'
-import SuccessNotification from './components/SuccessNotification'
-import blogService from './services/blogs'
+import BlogList from "./components/BlogList"
+import LoginForm from "./components/LoginForm"
+import Header from "./components/Header"
+import CreateForm from "./components/CreateForm"
+import ErrorNotification from "./components/ErrorNotification"
+import SuccessNotification from "./components/SuccessNotification"
+import blogService from "./services/blogs"
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -24,11 +24,11 @@ const App = () => {
   }, [triggerFetch])
 
   const handleBlogAdded = () => {
-    setTriggerFetch(prev => !prev)
+    setTriggerFetch((prev) => !prev)
   }
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser")
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -40,23 +40,21 @@ const App = () => {
     <div>
       {!user ? (
         <>
-          <LoginForm
-            setUser={setUser}
-            setErrorMessage={setErrorMessage}
-          />
+          <LoginForm setUser={setUser} setErrorMessage={setErrorMessage} />
           <br></br>
-          <ErrorNotification message={errorMessage}/>
+          <ErrorNotification message={errorMessage} />
         </>
       ) : (
         <>
-          <Header name={user.name}/>
+          <Header name={user.name} />
           <CreateForm
-            setSuccessMessage = {setSuccessMessage}
-            setErrorMessage = {setErrorMessage}
-            onBlogAdded = {handleBlogAdded}/>
+            setSuccessMessage={setSuccessMessage}
+            setErrorMessage={setErrorMessage}
+            onBlogAdded={handleBlogAdded}
+          />
           <br></br>
-          <SuccessNotification message = {successMessage}/>
-          <ErrorNotification message = {errorMessage} />
+          <SuccessNotification message={successMessage} />
+          <ErrorNotification message={errorMessage} />
           <BlogList
             blogs={blogs}
             loggedInUser={user}
