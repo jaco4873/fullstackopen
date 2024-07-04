@@ -1,14 +1,15 @@
 import React, { useState } from "react"
 import loginService from "../services/login"
 import blogService from "../services/blogs"
-import { useNotificationDispatch } from '../contexts/NotificationContext'
+import { useNotificationDispatch } from "../contexts/NotificationContext"
+import { useUserDispatch } from "../contexts/UserContext"
 
-
-const LoginForm = ({ setUser }) => {
+const LoginForm = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  const dispatch = useNotificationDispatch()
+  const dispatchNotification = useNotificationDispatch()
+  const dispatchUser = useUserDispatch()
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -16,13 +17,13 @@ const LoginForm = ({ setUser }) => {
       const user = await loginService.login({ username, password })
       window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user))
       blogService.setToken(user.token)
-      setUser(user)
+      dispatchUser({ type: "LOGIN", payload: user })
       setUsername("")
       setPassword("")
     } catch (exception) {
-      dispatch({ type: "LOGIN_ERROR" })
+      dispatchNotification({ type: "LOGIN_ERROR" })
       setTimeout(() => {
-        dispatch({ type: "RESET" })
+        dispatchNotification({ type: "RESET" })
       }, 5000)
     }
   }
@@ -55,6 +56,7 @@ const LoginForm = ({ setUser }) => {
             />
           </label>
         </div>
+        <br />
         <button type="submit" data-testid="loginbutton">
           Login
         </button>

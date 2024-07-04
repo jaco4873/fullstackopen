@@ -1,26 +1,32 @@
-import Blog from "./Blog"
-import PropTypes from "prop-types"
+import BlogListing from "./BlogListing"
+import blogService from "../services/blogs"
+import { useQuery } from "@tanstack/react-query"
 
-const BlogList = ({ blogs, loggedInUser, onBlogAdded }) => {
-  blogs.sort((a, b) => b.likes - a.likes)
+const BlogList = () => {
+  const result = useQuery({
+    queryKey: ["blogs"],
+    queryFn: blogService.getAll,
+  })
+
+  if (result.isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (result.isError) {
+    return <div>Error loading blogs</div>
+  }
+
+  const blogs = result.data
+  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
 
   return (
     <div>
       <br />
-      {blogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          onBlogAdded={onBlogAdded}
-          loggedInUser={loggedInUser}
-        />
+      {sortedBlogs.map((blog) => (
+        <BlogListing key={blog.id} blog={blog} />
       ))}
     </div>
   )
 }
 
-BlogList.propTypes = {
-  blogs: PropTypes.array.isRequired,
-  onBlogAdded: PropTypes.func.isRequired,
-}
 export default BlogList

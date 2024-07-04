@@ -4,12 +4,22 @@ const User = require("../models/user")
 
 usersRouter.get("/", async (request, response) => {
   const users = await User.find({}).populate("blogs", {
-    title: 1,
+    title: 1, // this is field selection syntax for mongo (binary)
     author: 1,
     url: 1,
     likes: 1,
   })
   response.status(200).json(users)
+})
+
+usersRouter.get("/:id", async (request, response) => {
+  const user = await User.findById(request.params.id).populate("blogs", {
+    title: 1, // this is field selection syntax for mongo (binary)
+    author: 1,
+    url: 1,
+    likes: 1,
+  })
+  response.status(200).json(user)
 })
 
 usersRouter.post("/", async (request, response) => {

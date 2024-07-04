@@ -1,27 +1,30 @@
-import { createContext, useContext, useReducer } from 'react'
+import { createContext, useContext, useReducer } from "react"
 
 const notificationReducer = (state, action) => {
   switch (action.type) {
     case "SUCCESS":
-        return `A new blog ${action.title} by ${action.author} added`
+      return `A new blog ${action.title} by ${action.author} added`
     case "ERROR":
-        return `Failed to add blog: ${action.error}`
+      return `Failed to add blog: ${action.error}`
     case "LOGIN_ERROR":
-        return "wrong username or password"
+      return "wrong username or password"
     case "RESET":
-        return null
+      return null
     default:
-        return state
+      return state
   }
 }
 
 const NotificationContext = createContext()
 
 export const NotificationContextProvider = (props) => {
-  const [notification, notificationDispatch] = useReducer(notificationReducer, null)
+  const [notification, notificationDispatch] = useReducer(
+    notificationReducer,
+    null,
+  )
 
   return (
-    <NotificationContext.Provider value={[notification, notificationDispatch] }>
+    <NotificationContext.Provider value={[notification, notificationDispatch]}>
       {props.children}
     </NotificationContext.Provider>
   )

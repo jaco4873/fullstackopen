@@ -7,6 +7,11 @@ blogsRouter.get("/", async (request, response) => {
   response.status(200).json(blogs)
 })
 
+blogsRouter.get("/:id", async (request, response) => {
+  const blog = await Blog.findById(request.params.id)
+  response.status(200).json(blog)
+})
+
 blogsRouter.post("/", middleware.userExtractor, async (request, response) => {
   const body = request.body
   const user = request.user

@@ -1,50 +1,55 @@
 import React, { useState } from "react"
+import { useQueryClient, useMutation } from "@tanstack/react-query"
 import blogsService from "../services/blogs"
 import PropTypes from "prop-types"
-import { useNotificationDispatch } from '../contexts/NotificationContext'
+import { useNotificationDispatch } from "../contexts/NotificationContext"
 
-const CreateForm = ({ onBlogAdded }) => {
+const CreateForm = () => {
   const [createFormVisible, setCreateFormVisible] = useState(false)
   const [title, setTitle] = useState("")
   const [author, setAuthor] = useState("")
   const [url, setUrl] = useState("")
 
+  // View/Hide Create Form functionality
   const hideWhenVisible = { display: createFormVisible ? "none" : "" }
   const showWhenVisible = { display: createFormVisible ? "" : "none" }
 
+  // Setup server communication
+  const queryClient = useQueryClient()
   const dispatchNotification = useNotificationDispatch()
-  
-      const handleSubmit = async (event) => {
-      event.preventDefault()
-      const blogData = {
-        title: title,
-        author: author,
-        url: url,
-      }
 
-    // Logic to refetch blogs and update UI on new blog creation
-    try {
-      const response = await blogsService.create(blogData)
-      console.log(response)
-      if (response.status === 201) {
-        setTitle("")
-        setAuthor("")
-        setUrl("")
-        dispatchNotification({ type: "SUCCESS", title, author })
+  const newBlogMutation = useMutation({
+    mutationFn: blogsService.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["blogs"] })
+      setTitle("")
+      setAuthor("")
+      setUrl("")
+      dispatchNotification({ type: "SUCCESS", title, author })
 
-        setTimeout(() => {
-          dispatchNotification({ type: "RESET" }) 
-        }, 5000)
-        onBlogAdded()
-      } else {
-        throw new Error(`Server responded with status: ${response.status}`)
-      }
-    } catch (error) {
-      dispatchNotification({ type: "ERROR", error: error.message || "Unknown error" })
       setTimeout(() => {
         dispatchNotification({ type: "RESET" })
       }, 5000)
+    },
+    onError: (error) => {
+      dispatchNotification({
+        type: "ERROR",
+        error: error.message || "Unknown error",
+      })
+      setTimeout(() => {
+        dispatchNotification({ type: "RESET" })
+      }, 5000)
+    },
+  })
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blogData = {
+      title: title,
+      author: author,
+      url: url,
     }
+    newBlogMutation.mutate(blogData)
   }
 
   return (
@@ -55,7 +60,7 @@ const CreateForm = ({ onBlogAdded }) => {
       </div>
       <div style={showWhenVisible}>
         <h2>create new</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={addBlog}>
           <div>
             <label>
               title:
@@ -102,8 +107,6 @@ const CreateForm = ({ onBlogAdded }) => {
 }
 
 CreateForm.proptypes = {
-  setErrorMessage: PropTypes.func.isRequired,
-  setSuccessMessage: PropTypes.func.isRequired,
   onBlogAdded: PropTypes.func.isRequired,
 }
 

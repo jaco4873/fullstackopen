@@ -1,64 +1,55 @@
-import { useState, useEffect } from "react"
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { useUserState, useUserDispatch } from "./contexts/UserContext"
 
-import BlogList from "./components/BlogList"
+import BlogPage from "./components/BlogPage"
 import LoginForm from "./components/LoginForm"
-import Header from "./components/Header"
-import CreateForm from "./components/CreateForm"
+import NavMenu from "./components/NavMenu"
 import Notification from "./components/Notification"
+import Users from "./components/Users"
+import UserDetail from "./components/UserDetails"
+import BlogDetail from "./components/BlogDetails"
+
 import blogService from "./services/blogs"
 
+
 const App = () => {
-  const [user, setUser] = useState(null)
+  const user = useUserState()
+  const dispatchUser = useUserDispatch()
+
+
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser")
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      dispatchUser({ type: "LOGIN", payload: user })
       blogService.setToken(user.token)
     }
-  }, [])
+  }, [dispatchUser])
 
-  const queryClient = useQueryClient()
-
-  const handleBlogAdded = () => {
-    queryClient.invalidateQueries(['blogs']) 
+  if (!user) {
+    return (
+      <div>
+        <LoginForm />
+        <Notification />
+      </div>
+    )
   }
-
-  const result = useQuery({
-    queryKey: ['blogs'],
-    queryFn: blogService.getAll,
-  })
-
-  if (result.isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (result.isError) {
-    return <div>Error loading blogs</div>
-  }
-
-  const blogs = result.data
 
   return (
-    <div>
-      {!user ? (
-        <>
-          <LoginForm setUser={setUser} />
-          <br />
-          <Notification />
-        </>
-      ) : (
-        <>
-          <Header name={user.name} />
-          <CreateForm onBlogAdded={handleBlogAdded} />
-          <br />
-          <Notification />
-          <BlogList blogs={blogs} loggedInUser={user} onBlogAdded={handleBlogAdded} />
-        </>
-      )}
-    </div>
+    <Router>
+      <div>
+        <NavMenu />
+        <Notification />
+        <Routes>
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<UserDetail />} />
+          <Route path="/blogs/:id" element={<BlogDetail />} />
+          <Route path="/" element={<BlogPage />} />
+        </Routes>
+      </div>
+    </Router>
   )
 }
 
