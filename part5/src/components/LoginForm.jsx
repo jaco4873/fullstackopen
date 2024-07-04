@@ -1,10 +1,14 @@
 import React, { useState } from "react"
 import loginService from "../services/login"
 import blogService from "../services/blogs"
+import { useNotificationDispatch } from '../contexts/NotificationContext'
 
-const LoginForm = ({ setUser, setErrorMessage }) => {
+
+const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+
+  const dispatch = useNotificationDispatch()
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -16,9 +20,9 @@ const LoginForm = ({ setUser, setErrorMessage }) => {
       setUsername("")
       setPassword("")
     } catch (exception) {
-      setErrorMessage("wrong username or password")
+      dispatch({ type: "LOGIN_ERROR" })
       setTimeout(() => {
-        setErrorMessage(null)
+        dispatch({ type: "RESET" })
       }, 5000)
     }
   }

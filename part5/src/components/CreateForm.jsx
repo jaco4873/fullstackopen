@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import blogsService from "../services/blogs"
 import PropTypes from "prop-types"
+import { useNotificationDispatch } from '../contexts/NotificationContext'
 
-const CreateForm = ({ setErrorMessage, setSuccessMessage, onBlogAdded }) => {
+const CreateForm = ({ onBlogAdded }) => {
   const [createFormVisible, setCreateFormVisible] = useState(false)
   const [title, setTitle] = useState("")
   const [author, setAuthor] = useState("")
@@ -11,13 +12,15 @@ const CreateForm = ({ setErrorMessage, setSuccessMessage, onBlogAdded }) => {
   const hideWhenVisible = { display: createFormVisible ? "none" : "" }
   const showWhenVisible = { display: createFormVisible ? "" : "none" }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    const blogData = {
-      title: title,
-      author: author,
-      url: url,
-    }
+  const dispatchNotification = useNotificationDispatch()
+  
+      const handleSubmit = async (event) => {
+      event.preventDefault()
+      const blogData = {
+        title: title,
+        author: author,
+        url: url,
+      }
 
     // Logic to refetch blogs and update UI on new blog creation
     try {
@@ -27,18 +30,19 @@ const CreateForm = ({ setErrorMessage, setSuccessMessage, onBlogAdded }) => {
         setTitle("")
         setAuthor("")
         setUrl("")
-        setSuccessMessage(`A new blog ${title} by ${author} added`)
+        dispatchNotification({ type: "SUCCESS", title, author })
+
         setTimeout(() => {
-          setSuccessMessage(null)
+          dispatchNotification({ type: "RESET" }) 
         }, 5000)
         onBlogAdded()
       } else {
         throw new Error(`Server responded with status: ${response.status}`)
       }
     } catch (error) {
-      setErrorMessage(`Failed to add blog: ${error.message || "Unknown error"}`)
+      dispatchNotification({ type: "ERROR", error: error.message || "Unknown error" })
       setTimeout(() => {
-        setErrorMessage(null)
+        dispatchNotification({ type: "RESET" })
       }, 5000)
     }
   }
