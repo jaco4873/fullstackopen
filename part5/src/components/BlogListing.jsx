@@ -2,7 +2,11 @@ import blogsService from "../services/blogs"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { useNotificationDispatch } from "../contexts/NotificationContext"
 import { useUserState } from "../contexts/UserContext"
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom"
+import TableRow from "@mui/material/TableRow"
+import TableCell from "@mui/material/TableCell"
+import IconButton from "@mui/material/IconButton"
+import DeleteIcon from "@mui/icons-material/Delete"
 
 const BlogListing = ({ blog }) => {
   // inline styles
@@ -44,26 +48,19 @@ const BlogListing = ({ blog }) => {
   }
 
   return (
-    <>
-      <div style={blogStyle} className="blog" data-testid="blogPost">
-        <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
-        
-        
-          {loggedInUser.username === blog.user.username && (
-            <button
-              style={{
-                backgroundColor: "rgba(255, 0, 0, 0.4)",
-                borderRadius: "3px",
-                margin: 2,
-                marginLeft: 20,
-              }}
-              onClick={handleDelete}
-            >
-              remove
-            </button>
-          )}
-        </div>
-    </>
+    <TableRow className="blog" data-testid="blogPost">
+      <TableCell>
+        <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+      </TableCell>
+      <TableCell>{blog.author}</TableCell>
+      <TableCell>
+        {loggedInUser.username === blog.user.username && (
+          <IconButton aria-label="delete" onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+        )}
+      </TableCell>
+    </TableRow>
   )
 }
 

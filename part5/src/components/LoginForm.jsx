@@ -1,8 +1,13 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import loginService from "../services/login"
 import blogService from "../services/blogs"
 import { useNotificationDispatch } from "../contexts/NotificationContext"
 import { useUserDispatch } from "../contexts/UserContext"
+
+import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
 const LoginForm = () => {
   const [username, setUsername] = useState("")
@@ -29,39 +34,45 @@ const LoginForm = () => {
   }
 
   return (
-    <>
-      <h1>log in to application</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>
-            Username:
-            <input
-              data-testid="username"
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password:
-            <input
-              data-testid="password"
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </label>
-        </div>
-        <br />
-        <button type="submit" data-testid="loginbutton">
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <Typography variant="h4" component="h1" gutterBottom>
+        Login to Blog App
+      </Typography>
+      <Box component="form" onSubmit={handleLogin} sx={{ mt: 3 }}>
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Username"
+          type="text"
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}
+        />
+        <TextField
+          fullWidth
+          label="Password"
+          type="password"
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+        />
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          type="submit"
+          sx={{ mt: 6, height: 50 }}
+        >
           Login
-        </button>
-      </form>
-    </>
+        </Button>
+      </Box>
+    </Box>
   )
 }
 

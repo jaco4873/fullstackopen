@@ -8,6 +8,8 @@ const notificationReducer = (state, action) => {
       return `Failed to add blog: ${action.error}`
     case "LOGIN_ERROR":
       return "wrong username or password"
+    case "COMMENT_ERROR":
+      return `Failed to add comment: ${action.error}`
     case "RESET":
       return null
     default:

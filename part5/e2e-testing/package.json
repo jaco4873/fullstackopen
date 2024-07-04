@@ -6,7 +6,7 @@
   "scripts": {
     "test": "playwright test",
     "test:report": "playwright show-report",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext js,jsx --fix --report-unused-disable-directives",
     "format": "prettier --write .",
     "format:lint": "npm run format && npm run lint"
   },

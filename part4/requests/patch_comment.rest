@@ -1,0 +1,6 @@
+# Add a comment to a blog post
+PATCH http://localhost:3003/api/blogs/6686dbaedd0af67a71b72f66/comments
+Content-Type: application/json
+{
+    "comment": "This is a test comment."
+}

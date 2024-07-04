@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { useUserState, useUserDispatch } from "./contexts/UserContext"
+import { Container } from "@mui/material"
 
 import BlogPage from "./components/BlogPage"
 import LoginForm from "./components/LoginForm"
@@ -12,12 +13,9 @@ import BlogDetail from "./components/BlogDetails"
 
 import blogService from "./services/blogs"
 
-
 const App = () => {
   const user = useUserState()
   const dispatchUser = useUserDispatch()
-
-
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser")
@@ -38,18 +36,20 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <div>
-        <NavMenu />
-        <Notification />
-        <Routes>
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<UserDetail />} />
-          <Route path="/blogs/:id" element={<BlogDetail />} />
-          <Route path="/" element={<BlogPage />} />
-        </Routes>
-      </div>
-    </Router>
+    <Container>
+      <Router>
+        <div>
+          <NavMenu />
+          <Notification />
+          <Routes>
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<UserDetail />} />
+            <Route path="/blogs/:id" element={<BlogDetail />} />
+            <Route path="/" element={<BlogPage />} />
+          </Routes>
+        </div>
+      </Router>
+    </Container>
   )
 }
 

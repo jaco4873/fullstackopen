@@ -30,6 +30,18 @@ blogsRouter.post("/", middleware.userExtractor, async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
+blogsRouter.patch("/:id/comments", async (request, response) => {
+  const body = request.body
+  const blog = await Blog.findById(request.params.id)
+  blog.comments = blog.comments.concat(body.comment)
+  const updatedDocument = await Blog.findByIdAndUpdate(
+    request.params.id,
+    blog,
+    { new: true },
+  )
+  response.status(200).json(updatedDocument)
+})
+
 blogsRouter.delete(
   "/:id",
   middleware.userExtractor,
@@ -62,6 +74,7 @@ blogsRouter.put("/:id", async (request, response) => {
     author: body.author,
     likes: body.likes,
     user: request.user,
+    comments: body.comments,
   }
 
   const updatedDocument = await Blog.findByIdAndUpdate(

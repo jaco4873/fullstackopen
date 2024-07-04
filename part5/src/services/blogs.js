@@ -44,4 +44,9 @@ const like = async (blog) => {
   return response
 }
 
-export default { getAll, getById, create, like, remove, setToken }
+const addComment = async (id, comment) => {
+  const response = await axios.patch(`${baseUrl}/${id}/comments`, { comment })
+  return response.data
+}
+
+export default { getAll, getById, create, like, remove, setToken, addComment }

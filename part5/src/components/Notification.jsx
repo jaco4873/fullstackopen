@@ -1,5 +1,5 @@
-import React from "react"
 import { useNotificationValue } from "../contexts/NotificationContext"
+import Alert from "@mui/material/Alert"
 
 const Notification = () => {
   const notification = useNotificationValue()
@@ -12,7 +12,13 @@ const Notification = () => {
     notification.startsWith("Failed") ||
     notification === "wrong username or password"
 
-  return <div className={isError ? "error" : "success"}>{notification}</div>
+  return (
+    <div>
+      {notification && (
+        <Alert severity={isError ? "error" : "success"}>{notification}</Alert>
+      )}
+    </div>
+  )
 }
 
 export default Notification
