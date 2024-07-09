@@ -5,16 +5,22 @@
   "main": "library-backend.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon library-backend.js"
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.10.4",
+    "dotenv": "^16.4.5",
     "graphql": "^16.9.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.0",
+    "mongoose-unique-validator": "^5.0.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/mongoose-unique-validator": "^1.0.9",
     "nodemon": "^3.1.4"
   }
 }
