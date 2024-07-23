@@ -1,11 +1,13 @@
 import diagnosesData from '../../data/diagnoses.ts';
 
-import { DiagnosisEntry } from '../types/diagnosis.ts';
-
-
+import { DiagnosisEntry } from '../types';
 
 const getDiagnoses = (): DiagnosisEntry[] => {
   return diagnosesData;
+};
+
+const getDiagnosisByCode = (code: string): DiagnosisEntry | undefined => {
+  return diagnosesData.find(d => d.code === code);
 };
 
 const addDiagnosis = () => {
@@ -14,5 +16,6 @@ const addDiagnosis = () => {
 
 export default {
   getDiagnoses,
+  getDiagnosisByCode,
   addDiagnosis
 };
