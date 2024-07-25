@@ -1,0 +1,4 @@
+build/
+client/dist
+client/node_modules
+client/vite.config.ts

@@ -1,0 +1,43 @@
+### Add a New HealthCheck Entry to a Patient
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "type": "HealthCheck",
+  "description": "Yearly health checkup",
+  "date": "2023-07-23",
+  "specialist": "Dr. Smith",
+  "healthCheckRating": 0
+}
+
+### Add a New Hospital Entry to a Patient
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "type": "Hospital",
+  "description": "Appendectomy",
+  "date": "2023-07-23",
+  "specialist": "Dr. Brown",
+  "diagnosisCodes": ["S62.5", "M51.2"],
+  "discharge": {
+    "date": "2023-07-30",
+    "criteria": "No signs of infection"
+  }
+}
+
+### Add a New OccupationalHealthcare Entry to a Patient
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "type": "OccupationalHealthcare",
+  "description": "Workplace injury",
+  "date": "2023-07-23",
+  "specialist": "Dr. Green",
+  "employerName": "Company Inc.",
+  "sickLeave": {
+    "startDate": "2023-07-24",
+    "endDate": "2023-07-31"
+  }
+}
