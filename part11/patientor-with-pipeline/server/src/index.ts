@@ -18,7 +18,7 @@ app.use(cors());
 const PORT = 3001;
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
-const staticPath: string = path.resolve(__dirname, '../../../client/src/dist');
+const staticPath: string = path.resolve(__dirname, '../../client/dist');
 console.log(`Serving static files from: ${staticPath}`);
 app.use(express.static(staticPath));
 
