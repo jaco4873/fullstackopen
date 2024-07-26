@@ -1,18 +1,16 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": ".",
+
+    // linting
     "strict": true,
+    "declaration": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "noFallthroughCasesInSwitch": true
   },
-  "files": [],
-  "references": [
-    { "path": "./client/tsconfig.json" },
-    { "path": "./server/tsconfig.json" }
-  ],
-  "include": ["./client/**/*", "./server/**/*", "./data/**/*", "./shared/**/*"],
-  "exclude": ["node_modules", "./client/vite.config.ts"]
+  "exclude": ["node_modules", "dist", "client/vite.config.ts"]
 }
