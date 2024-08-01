@@ -15,30 +15,8 @@ jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: github context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Check style
-        run: npm run lint
-
-      - name: Build
-        run: npm run build
-
-      - name: Test
-        run: npm test
-
       - name: Trigger deployment
-        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID_PATIENTOR }}?key=${{ secrets.RENDER_API_KEY_PATIENTOR }}
         if: ${{ github.event_name == 'push' && !contains(env.COMMIT_MESSAGES, '#skip') }}
 
   tag_release:
@@ -51,42 +29,3 @@ jobs:
         uses: anothrNick/github-tag-action@777684df761b882a3f4f70db16ac70d8cc78d0ea
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  discord_notifications:
-    needs: [simple_deployment_pipeline]
-    runs-on: ubuntu-20.04
-    
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deployment success
-        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
-        if: ${{ success() }}
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
-          text: "Deployment was successful: ${{ github.repositoryUrl }}"
-          details: "Deployment succeeded: ${{ github.repositoryUrl }}"
-          username: DiscordBot
-          color: '#ff00aa'
-
-      - name: deployment failure
-        uses: rjstone/discord-webhook-notify@v1
-        if: ${{ failure() }}
-        with:
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-            severity: error
-            text: "Deployment failed!"
-            details: "Deployment failed: ${{ github.repositoryUrl }}. The commit hash is ${{ github.sha }}"
-            username: DiscordBot
-            color: '#ff00aa'
-      
-      - name: Deployment cancelled
-        uses: rjstone/discord-webhook-notify@v1
-        if: ${{ cancelled() }}
-        with:
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-            severity: warn
-            text: "Deployment was cancelled!"
-            details: "Deployment was cancelled by ${{ github.actor }}"
-            username: DiscordBot
-            color: '#ff00aa'
