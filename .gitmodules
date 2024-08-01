@@ -1,3 +1,6 @@
 [submodule "part11/full-stack-open-pokedex"]
 	path = part11/full-stack-open-pokedex
 	url = https://github.com/jaco4873/full-stack-open-pokedex
+[submodule "part11/patientor-with-pipeline"]
+	path = part11/patientor-with-pipeline
+	url = https://github.com/jaco4873/full-stack-open-patientor-with-pipeline.git
